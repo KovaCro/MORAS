@@ -3,5 +3,5 @@ CHIP BitShiftR {
     OUT out[16];
 
     PARTS:
-    And16(a[0..15]=true, b[0..14]=in[1..15], b[15] = in[0], out=out);
+    And16(a[0..15]=true, b[0..14]=in[1..15], b[15] = false, out=out);
 }
