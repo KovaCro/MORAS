@@ -3,40 +3,6 @@ D=A
 @i
 M=D
 
-(Vertical)
-@i
-D=M
-@2048
-D=A+D     //gornji offset
-@10
-D=A+D     // lijevi offset
-
-@SCREEN
-A=A+D
-M=0
-M=!M
-D=A
-@R3
-M=D
-@32767
-D=A
-@R3
-A=M
-M=M-D
-
-@32
-D=A
-@i
-M=M-D
-D=M
-@Vertical
-D;JGT
-
-@4096
-D=A
-@i
-M=D
-
 @16
 D=A
 @j
@@ -87,7 +53,7 @@ D=A
 M=M-D
 D=M
 
-@HorizontalInit
+@VerticalInit
 D;JEQ
 
 @Diagonal
@@ -116,7 +82,39 @@ M=D+M
 @MultSelf
 0;JMP
 
-(HorizontalInit)
+
+(VerticalInit)
+@4096
+D=A
+@i
+M=D
+
+(Vertical)
+@i
+D=M
+@2048
+D=A+D     //gornji offset
+@11
+D=A+D     // lijevi offset
+
+@SCREEN
+A=A+D
+M=M+1
+
+@32
+D=A
+@i
+M=M-D
+D=M
+@Vertical
+D;JGT
+
+@2091
+D=A
+@SCREEN
+A=A+D
+M=M-1
+
 @8
 D=A
 @i
