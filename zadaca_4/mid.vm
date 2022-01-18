@@ -1,0 +1,48 @@
+function Mid 3
+	push argument 0
+  push argument 1
+  gt
+  if-goto X_GT_Y
+  // y > x
+  push argument 1
+  push argument 2
+  gt
+  if-goto Y_GT_Z
+  // x < y < z
+  push argument 1
+  return
+  label X_GT_Y
+  // y < x
+  push argument 0
+  push argument 2
+  gt
+  if-goto X_GT_Z
+  // y < x < z
+  push argument 0
+  return
+  label Y_GT_Z
+  x < y i z < y
+  push argument 0
+  push argument 2
+  gt
+  if-goto X_CHECK_Z
+  // x < z < y
+  argument push 2
+  return
+  label X_GT_Z
+  // y < x i z < x
+  push argument 1
+  push argument 2
+  gt
+  if-goto Y_CHECK_Z
+  // y < z < x
+  push argument 2
+  return
+  label X_CHECK_Z
+  // z < x < y
+  push argument 0
+  return
+  label Y_CHECK_Z
+  // z < y < x
+  push argument 1
+  return

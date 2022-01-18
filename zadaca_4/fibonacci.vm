@@ -1,0 +1,18 @@
+function Fibonacci 1
+  push argument 0
+  push constant 2
+  lt
+  if-goto N_LT_TWO
+  push argument 0
+  push constant 2
+  sub
+  call fibonacci.Fibonacci 1
+  push argument 0
+  push constant 1
+  sub
+  call fibonacci.Fibonacci 1
+  add
+  return
+  label N_LT_TWO
+  push argument 0
+  return
