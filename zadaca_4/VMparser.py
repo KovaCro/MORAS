@@ -298,6 +298,8 @@ def main():
     P.parseFile("main")
     P.parseFile("mid")
     P.parseFile("fibonacci")
+    P.parseFile("divmod")
+    P.parseFile("BS")
     P.writeFile("program")
 
 if __name__ == '__main__':
