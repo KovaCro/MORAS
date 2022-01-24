@@ -1,0 +1,27 @@
+class Main {
+  function void main() {
+    do Screen.setColor(true);
+    do Screen.drawLine(0, 0, 255, 0);
+    do Screen.drawLine(0, 0, 0, 255);
+    do Screen.drawLine(255, 0, 255, 255);
+    do Screen.drawLine(0, 255, 255, 255);
+    do Screen.drawLine(128, 0, 128, 255);
+    do Screen.drawLine(0, 128, 255, 128);
+    do Main.drawFunction();
+    return;
+  }
+  function void drawFunction(){
+    var int x, fx, i;
+    let i = 0;
+    while(i < 256){
+      let x = i * 64 / 256;
+      let fx = (Main.f(x-32) + 32) * 256 / 64;
+      do Screen.drawPixel(i, fx);
+      let i = i + 1;
+    }
+    return;
+  }
+  function int f(int x){
+    return x;
+  }
+}

@@ -1,0 +1,42 @@
+class Qsort {
+  function Array recursion (Array A, int low, int high) {
+    var int temp, p, i;
+    var Array B, C;
+    if(low < high) {
+      let p = high;
+      let i = high-1;
+      while(i + 1 > low){
+        if(A[i] > A[p]){
+          let temp = A[i];
+          let A[i] = A[p-1];
+          let A[p-1] = temp;
+          let temp = A[p];
+          let A[p] = A[p-1];
+          let A[p-1] = temp;
+          let p = p-1;
+        }
+        let i = i - 1;
+      }
+      let B = Qsort.recursion(A, low, p-1);
+      let C = Qsort.recursion(A, p+1, high);
+      let i = low;
+      while(i - 1 < p - 1){
+        let A[i] = B[i];
+        let i = i+1;
+      }
+      let i = p+1;
+      while(i - 1 < high){
+        let A[i] = C[i];
+        let i = i+1;
+      }
+    }
+    //do B.dispose();
+    //do C.dispose();
+    return A;
+  }
+
+  function Array sort (Array A, int size) {
+    let A = Qsort.recursion(A, 0, size-1);
+    return A;
+  }
+}
