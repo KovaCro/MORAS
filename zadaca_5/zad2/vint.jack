@@ -12,6 +12,9 @@ class vint {
     let A = Array.new(capacity); 
     return this;
   }
+  method Array get_arr(){
+    return A;
+  }
   method int len() {
     return capacity;
   }
@@ -64,17 +67,17 @@ class vint {
     if(~(a.len() = b.len())) {
       return false;
     }
-    let n = a.len();
-    let A = Array.new(n);
-    let B = Array.new(n);
-    let A = Qsort.sort(a.A, n);
-    let B = Qsort.sort(b.A, n);
+    let A = a.get_arr();
+    let B = b.get_arr();
+    let A = Qsort.sort(A, a.len());
+    let B = Qsort.sort(B, b.len());
     let i = 0;
     let res = true;
     while(i < n){
       if(~(A[i] = B[i])) {
         let res = false;
       }
+      let i = i + 1;
     }
     do A.dispose();
     do B.dispose();

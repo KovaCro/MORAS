@@ -1,12 +1,9 @@
 class Main {
   function void main() {
-    var int temp1, temp2, length, i;
     var bool temp;
     var vint a, b;
     let a = vint.new(2);
     let b = vint.new(2);
-    let length = a.len();
-    let i = 0;
 
     do a.set(0, 2);
     do a.set(1, 4);
@@ -15,8 +12,8 @@ class Main {
 
     do b.set(0, 9);
     do b.set(1, 2);
-    do a.set(2, 7);
-    do a.set(3, 4);
+    do b.set(2, 7);
+    do b.set(3, 4);
 
     let temp = vint.is_eq(a, b);
     if(temp){
