@@ -1,0 +1,603 @@
+function Main.main 9
+push constant 12
+call String.new 1
+push constant 66
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 122
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Keyboard.readInt 1
+pop local 0
+call Screen.clearScreen 0
+pop temp 0
+push local 0
+call Board.new 1
+pop local 8
+push local 8
+call Board.drawBoard 1
+pop temp 0
+push constant 2
+pop local 2
+push constant 0
+pop local 3
+push local 8
+push constant 2
+push constant 0
+call Board.drawCursor 3
+pop temp 0
+push constant 1
+neg
+pop local 4
+push constant 1
+neg
+pop local 5
+push constant 0
+not
+pop local 6
+label WHILE_EXP0
+push local 6
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 7
+push local 7
+push constant 128
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 4
+push constant 1
+neg
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 8
+push local 2
+push local 0
+call Math.multiply 2
+push local 3
+add
+call Board.getState 2
+push constant 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 2
+pop local 4
+push local 3
+pop local 5
+label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
+push local 2
+push local 4
+push constant 1
+add
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 3
+push local 5
+sub
+push constant 2
+lt
+push local 3
+push local 5
+sub
+push constant 2
+neg
+gt
+and
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 3
+push local 5
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 8
+push local 2
+push local 0
+call Math.multiply 2
+push local 3
+add
+call Board.getState 2
+push constant 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push local 8
+push local 4
+push local 5
+push constant 0
+call Board.movePiece 4
+pop local 1
+push local 1
+push local 0
+push constant 1
+sub
+eq
+push local 8
+call Board.blackHasMoves 1
+not
+or
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+call Screen.clearScreen 0
+pop temp 0
+push constant 18
+call String.new 1
+push constant 66
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+pop local 6
+goto IF_END7
+label IF_FALSE7
+push local 8
+call Board.blackMinimax 1
+pop local 1
+push local 8
+call Board.whiteHasMoves 1
+not
+push local 1
+push constant 0
+eq
+or
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+call Screen.clearScreen 0
+pop temp 0
+push constant 16
+call String.new 1
+push constant 67
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+pop local 6
+label IF_FALSE8
+label IF_END7
+label IF_FALSE6
+goto IF_END5
+label IF_FALSE5
+push local 8
+push local 2
+push local 0
+call Math.multiply 2
+push local 3
+add
+call Board.getState 2
+push constant 2
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push local 8
+push local 4
+push local 5
+push local 3
+push local 5
+sub
+call Board.movePiece 4
+pop local 1
+push local 1
+push local 0
+push constant 1
+sub
+eq
+push local 8
+call Board.blackHasMoves 1
+not
+or
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+call Screen.clearScreen 0
+pop temp 0
+push constant 18
+call String.new 1
+push constant 66
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+pop local 6
+goto IF_END10
+label IF_FALSE10
+push local 8
+call Board.blackMinimax 1
+pop local 1
+push local 8
+call Board.whiteHasMoves 1
+not
+push local 1
+push constant 0
+eq
+or
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+call Screen.clearScreen 0
+pop temp 0
+push constant 16
+call String.new 1
+push constant 67
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 106
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 100
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+pop local 6
+label IF_FALSE11
+label IF_END10
+label IF_FALSE9
+label IF_END5
+label IF_FALSE4
+label IF_FALSE3
+push local 6
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push local 8
+push local 4
+push local 5
+call Board.drawSquare 3
+pop temp 0
+push local 8
+push local 4
+push local 5
+push local 8
+push local 4
+push local 0
+call Math.multiply 2
+push local 5
+add
+call Board.getState 2
+call Board.drawPiece 4
+pop temp 0
+push constant 1
+neg
+pop local 4
+push constant 1
+neg
+pop local 5
+label IF_FALSE12
+label IF_END1
+label IF_FALSE0
+push local 7
+push constant 129
+gt
+push local 7
+push constant 134
+lt
+and
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push local 2
+push local 4
+eq
+not
+push local 3
+push local 5
+eq
+not
+or
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push local 8
+push local 2
+push local 3
+call Board.drawSquare 3
+pop temp 0
+push local 8
+push local 2
+push local 3
+push local 8
+push local 2
+push local 0
+call Math.multiply 2
+push local 3
+add
+call Board.getState 2
+call Board.drawPiece 4
+pop temp 0
+label IF_FALSE14
+push local 7
+push constant 130
+eq
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push local 2
+push constant 0
+eq
+not
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push local 2
+push constant 1
+sub
+pop local 2
+label IF_FALSE16
+label IF_FALSE15
+push local 7
+push constant 131
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push local 3
+push constant 0
+eq
+not
+if-goto IF_TRUE18
+goto IF_FALSE18
+label IF_TRUE18
+push local 3
+push constant 1
+sub
+pop local 3
+label IF_FALSE18
+label IF_FALSE17
+push local 7
+push constant 132
+eq
+if-goto IF_TRUE19
+goto IF_FALSE19
+label IF_TRUE19
+push local 2
+push local 0
+push constant 1
+sub
+eq
+not
+if-goto IF_TRUE20
+goto IF_FALSE20
+label IF_TRUE20
+push local 2
+push constant 1
+add
+pop local 2
+label IF_FALSE20
+label IF_FALSE19
+push local 7
+push constant 133
+eq
+if-goto IF_TRUE21
+goto IF_FALSE21
+label IF_TRUE21
+push local 3
+push local 0
+push constant 1
+sub
+eq
+not
+if-goto IF_TRUE22
+goto IF_FALSE22
+label IF_TRUE22
+push local 3
+push constant 1
+add
+pop local 3
+label IF_FALSE22
+label IF_FALSE21
+push local 8
+push local 2
+push local 3
+call Board.drawCursor 3
+pop temp 0
+label IF_FALSE13
+push local 7
+push constant 140
+eq
+if-goto IF_TRUE23
+goto IF_FALSE23
+label IF_TRUE23
+push local 4
+push constant 1
+neg
+eq
+not
+if-goto IF_TRUE24
+goto IF_FALSE24
+label IF_TRUE24
+push local 8
+push local 4
+push local 5
+call Board.drawSquare 3
+pop temp 0
+push local 8
+push local 4
+push local 5
+push local 8
+push local 4
+push local 0
+call Math.multiply 2
+push local 5
+add
+call Board.getState 2
+call Board.drawPiece 4
+pop temp 0
+push constant 1
+neg
+pop local 4
+push constant 1
+neg
+pop local 5
+label IF_FALSE24
+label IF_FALSE23
+label WHILE_EXP1
+push local 7
+push constant 0
+eq
+not
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 7
+goto WHILE_EXP1
+label WHILE_END1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

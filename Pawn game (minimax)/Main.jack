@@ -1,0 +1,118 @@
+class Main {
+  function void main() {
+    var int size;
+    var int temp;
+    var int cursor_i, cursor_j, selected_i, selected_j;
+    var bool ongoing;
+    var char key;
+    var Board b;
+    let size = Keyboard.readInt("Board size: ");
+    do Screen.clearScreen();
+    let b = Board.new(size);
+    /*do b.perft(b.getStateArr());
+    do Screen.clearScreen();
+    do Output.printInt(b.getPerftCount());*/
+    do b.drawBoard();
+    let cursor_i = 2;
+    let cursor_j = 0;
+    do b.drawCursor(2, 0);
+    let selected_i = -1;
+    let selected_j = -1;
+    let ongoing = true;
+
+    while(ongoing){
+      let key = Keyboard.keyPressed();
+      if(key = 128){
+        if(selected_i = -1){
+          if(b.getState(cursor_i*size + cursor_j) = 1){
+            let selected_i = cursor_i;
+            let selected_j = cursor_j;
+          }
+        } else {
+          if(cursor_i = (selected_i + 1)){
+            if((cursor_j - selected_j < 2) & (cursor_j - selected_j > -2)){
+              if(cursor_j = selected_j){
+                if(b.getState(cursor_i*size + cursor_j) = 0){
+                  let temp = b.movePiece(selected_i, selected_j, 0);
+                  if((temp = (size-1)) | (~b.blackHasMoves())){
+                    do Screen.clearScreen();
+                    do Output.printString("Bijeli je pobjedio");
+                    let ongoing = false;
+                  } else {
+                    let temp = b.blackMinimax();
+                    if((~b.whiteHasMoves()) | (temp = 0)){
+                      do Screen.clearScreen();
+                      do Output.printString("Crni je pobjedio");
+                      let ongoing = false;
+                    }
+                  }
+                }
+              } else {
+                if(b.getState(cursor_i*size + cursor_j) = 2){
+                  let temp = b.movePiece(selected_i, selected_j, cursor_j - selected_j);
+                  if((temp = (size-1)) | (~b.blackHasMoves())){
+                    do Screen.clearScreen();
+                    do Output.printString("Bijeli je pobjedio");
+                    let ongoing = false;
+                  } else {
+                    let temp = b.blackMinimax();
+                    if((~b.whiteHasMoves()) | (temp = 0)){
+                      do Screen.clearScreen();
+                      do Output.printString("Crni je pobjedio");
+                      let ongoing = false;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          if(ongoing){
+            do b.drawSquare(selected_i, selected_j);
+            do b.drawPiece(selected_i, selected_j, b.getState(selected_i*size + selected_j));
+            let selected_i = -1;
+            let selected_j = -1;
+          }
+        }
+      }
+      if((key > 129) & (key < 134)){
+        if(~(cursor_i = selected_i) | ~(cursor_j = selected_j)){
+          do b.drawSquare(cursor_i, cursor_j);
+          do b.drawPiece(cursor_i, cursor_j, b.getState(cursor_i*size + cursor_j));
+        }
+        if(key = 130){
+          if(~(cursor_i = 0)){
+            let cursor_i = cursor_i - 1;
+          }
+        }
+        if(key = 131){
+          if(~(cursor_j = 0)){
+            let cursor_j = cursor_j - 1;
+          }
+        }
+        if(key = 132){
+          if(~(cursor_i = (size - 1))){
+            let cursor_i = cursor_i + 1;
+          }
+        }
+        if(key = 133){
+          if(~(cursor_j = (size - 1))){
+            let cursor_j = cursor_j + 1;
+          }
+        }
+        do b.drawCursor(cursor_i, cursor_j);
+      }
+      if(key = 140){
+        if(~(selected_i = -1)){
+          do b.drawSquare(selected_i, selected_j);
+          do b.drawPiece(selected_i, selected_j, b.getState(selected_i*size + selected_j));
+          let selected_i = -1;
+          let selected_j = -1;
+        }
+      }
+      while(~(key = 0)){
+        let key = Keyboard.keyPressed();
+      }
+    }
+    return;
+  }
+}

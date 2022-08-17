@@ -1,0 +1,17 @@
+class Utility {
+  function int gcd(int a, int b) {
+    var int r;
+    while (~(b = 0)) {
+      let r = a - (b * (a / b));
+      let a = b; let b = r;
+    }
+    return a;
+  }
+  function bool isEven(int a){
+    if(Utility.gcd(a, 2) = 2){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}

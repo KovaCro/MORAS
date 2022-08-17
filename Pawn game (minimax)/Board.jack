@@ -1,0 +1,420 @@
+class Board {
+  field Array state;
+  field int size;
+  field int squareSize;
+  field int perftCount;
+  constructor Board new(int n) {
+    var int i;
+    let i = 0;
+    let size = n;
+    let state = Array.new(n*n);
+    let squareSize = Math.divide(255, n);
+    while(i < n){
+      let state[i] = 1;
+      let state[n*(n-1) + i] = 2;
+      let i = i + 1;
+    }
+    let perftCount = 0;
+    return this;
+  }
+  method int getState(int i){
+    return state[i];
+  }
+  method Array getStateArr(){
+    return state;
+  }
+  method bool whiteHasMoves(){
+    var int i, j;
+    let i = 0;
+    while(i < (size-1)){
+      let j = 0;
+      while(j < size){
+        if(state[i*size + j] = 1){
+          if(j+1 < size){
+            if(state[i*size + size + j + 1] = 2){
+              return true;
+            }
+          }
+          if(j > 0){
+            if(state[i*size + size + j - 1] = 2){
+              return true;
+            }
+          }
+          if(state[i*size + size + j] = 0){
+            return true;
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    return false;
+  }
+  method bool blackHasMoves(){
+    var int i, j;
+    let i = 1;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        if(state[i*size + j] = 2){
+          if(j+1 < size){
+            if(state[i*size - size + j + 1] = 1){
+              return true;
+            }
+          }
+          if(j > 0){
+            if(state[i*size - size + j - 1] = 1){
+              return true;
+            }
+          }
+          if(state[i*size - size + j] = 0){
+            return true;
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    return false;
+  }
+  method void drawSquare(int i, int j){
+    do Screen.setColor(Utility.isEven(j+i));
+    do Screen.drawRectangle(i*squareSize, j*squareSize, i+1*squareSize, j+1*squareSize);
+    return;
+  }
+  method void drawCursor(int i, int j){
+    do Screen.setColor(~Utility.isEven(j+i));
+    do Screen.drawCircle(i*squareSize + (squareSize/2), j*squareSize + (squareSize/2), (squareSize/2)-1);
+    do drawPiece(i, j, state[i*size + j]);
+    return;
+  }
+  method void drawPiece(int i, int j, int state){
+    var int squareMargin;
+    if(state = 0){
+      return;
+    }
+    let squareMargin = Math.divide(squareSize, 4);
+    if(state = 1){
+      do Screen.setColor(true);
+      do Screen.drawRectangle(i*squareSize + squareMargin, j*squareSize + squareMargin, i+1*squareSize - squareMargin, j+1*squareSize - squareMargin);
+      do Screen.setColor(false);
+      do Screen.drawRectangle(i*squareSize + squareMargin + 2, j*squareSize + squareMargin + 2, i+1*squareSize - squareMargin - 2, j+1*squareSize - squareMargin - 2);
+    } else {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(i*squareSize + squareMargin, j*squareSize + squareMargin, i+1*squareSize - squareMargin, j+1*squareSize - squareMargin);
+      do Screen.setColor(true);
+      do Screen.drawRectangle(i*squareSize + squareMargin + 2, j*squareSize + squareMargin + 2, i+1*squareSize - squareMargin - 2, j+1*squareSize - squareMargin - 2);
+    }
+    return;
+  }
+  method void drawBoard() {
+    var int i, j;
+    let i = 0;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        do drawSquare(i, j);
+        do drawPiece(i, j, state[i*size + j]);
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    return;
+  }
+  method void printstate(){
+    var int i, j;
+    let i = 0;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        do Output.printInt(state[i*size + j]);
+        let j = j + 1;
+      }
+      do Output.println();
+      let i = i + 1;
+    }
+    return;
+  }
+  method int movePiece(int i, int j, int d){
+    var int piece;
+    let piece = state[i*size + j];
+    do drawSquare(i, j);
+    let state[i*size + j] = 0;
+    if(piece = 1){
+      let state[i*size + size + j + d] = 1;
+      do drawPiece(i+1, j+d, 1);
+      return i+1;
+    } else {
+      let state[i*size - size + j + d] = 2;
+      do drawPiece(i-1, j+d, 2);
+      return i-1;
+    }
+  }
+  method int blackGreedy(){
+    var int i, j;
+    let i = 1;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        if(state[i*size + j] = 2){
+          if(j+1 < size){
+            if(state[i*size - size + j + 1] = 1){
+              do movePiece(i, j, 1);
+              return i-1;
+            }
+          }
+          if(j > 0){
+            if(state[i*size - size + j - 1] = 1){
+              do movePiece(i, j, -1);
+              return i-1;
+            }
+          }
+          if(state[i*size - size + j] = 0){
+            do movePiece(i, j, 0);
+            return i-1;
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    return -1;
+  }
+  method void perft(Array position){
+    var int i, j;
+    let i = 0;
+    let perftCount = perftCount + 1;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        do Output.printInt(position[i*size + j]);
+        let j = j + 1;
+      }
+      do Output.println();
+      let i = i + 1;
+    }
+    let i = 0;
+    while(i < (size-1)){
+      let j = 0;
+      while(j < size){
+        if(position[i*size + j] = 1){
+          if(position[(i+1)*size + j] = 0){
+            let position[i*size + j] = 0;
+            let position[(i+1)*size + j] = 1;
+            do perft(position);
+            let position[i*size + j] = 1;
+            let position[(i+1)*size + j] = 0;
+          }
+          if(j > 0){
+            if(position[(i+1)*size + j - 1] = 2){
+              let position[i*size + j] = 0;
+              let position[(i+1)*size + j - 1] = 1;
+              do perft(position);
+              let position[i*size + j] = 1;
+              let position[(i+1)*size + j - 1] = 2;
+            }
+          }
+          if((j+1) < size){
+            if(position[(i+1)*size + j + 1] = 2){
+              let position[i*size + j] = 0;
+              let position[(i+1)*size + j + 1] = 1;
+              do perft(position);
+              let position[i*size + j] = 1;
+              let position[(i+1)*size + j + 1] = 2;
+            }
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    return;
+  }
+  method int getPerftCount(){
+    return perftCount;
+  }
+  method int blackMinimax(){
+    var int i, j, greedy, score;
+    let i = 1;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        if(state[i*size + j] = 2){
+          if(state[(i-1)*size + j] = 0){
+            let state[i*size + j] = 0;
+            let state[(i-1)*size + j] = 2;
+            let score = maxi();
+            let state[i*size + j] = 2;
+            let state[(i-1)*size + j] = 0;
+            if(score = -1){
+              do movePiece(i, j, 0);
+              return i-1;
+            }
+          }
+          if(j > 0){
+            if(state[(i-1)*size + j - 1] = 1){
+              let state[i*size + j] = 0;
+              let state[(i-1)*size + j - 1] = 2;
+              let score = maxi();
+              let state[i*size + j] = 2;
+              let state[(i-1)*size + j - 1] = 1;
+              if(score = -1){
+                do movePiece(i, j, -1);
+                return i-1;
+              }
+            }
+          }
+          if((j+1) < size){
+            if(state[(i-1)*size + j + 1] = 1){
+              let state[i*size + j] = 0;
+              let state[(i-1)*size + j + 1] = 2;
+              let score = maxi();
+              let state[i*size + j] = 2;
+              let state[(i-1)*size + j + 1] = 1;
+              if(score = -1){
+                do movePiece(i, j, 1);
+                return i-1;
+              }
+            }
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    let greedy = blackGreedy();
+    return greedy;
+  }
+  method int maxi(){
+    var int i, j, score;
+    var bool moveHappened;
+    let moveHappened = false;
+    let i = 0;
+    while(i < size){
+      if(state[size*(size-1) + i] = 1){
+        return 1;
+      }
+      let i = i + 1;
+    }
+    let i = 0;
+    while(i < (size-1)){
+      let j = 0;
+      while(j < size){
+        if(state[i*size + j] = 1){
+          if(state[(i+1)*size + j] = 0){
+            let state[i*size + j] = 0;
+            let state[(i+1)*size + j] = 1;
+            let score = mini();
+            let state[i*size + j] = 1;
+            let state[(i+1)*size + j] = 0;
+            if(score = 1){
+              return 1;
+            } else {
+              let moveHappened = true;
+            }
+          }
+          if(j > 0){
+            if(state[(i+1)*size + j - 1] = 2){
+              let state[i*size + j] = 0;
+              let state[(i+1)*size + j - 1] = 1;
+              let score = mini();
+              let state[i*size + j] = 1;
+              let state[(i+1)*size + j - 1] = 2;
+              if(score = 1){
+                return 1;
+              } else {
+                let moveHappened = true;
+              }
+            }
+          }
+          if((j+1) < size){
+            if(state[(i+1)*size + j + 1] = 2){
+              let state[i*size + j] = 0;
+              let state[(i+1)*size + j + 1] = 1;
+              let score = mini();
+              let state[i*size + j] = 1;
+              let state[(i+1)*size + j + 1] = 2;
+              if(score = 1){
+                return 1;
+              } else {
+                let moveHappened = true;
+              }
+            }
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    if(moveHappened = true){
+      return -1;
+    }
+    return 1;
+  }
+  method int mini(){
+    var int i, j, score;
+    var bool moveHappened;
+    let moveHappened = false;
+    let i = 0;
+    while(i < size){
+      if(state[i] = 2){
+        return -1;
+      }
+      let i = i + 1;
+    }
+    let i = 1;
+    while(i < size){
+      let j = 0;
+      while(j < size){
+        if(state[i*size + j] = 2){
+          if(state[(i-1)*size + j] = 0){
+            let state[i*size + j] = 0;
+            let state[(i-1)*size + j] = 2;
+            let score = maxi();
+            let state[i*size + j] = 2;
+            let state[(i-1)*size + j] = 0;
+            if(score = -1){
+              return -1;
+            } else {
+              let moveHappened = true;
+            }
+          }
+          if(j > 0){
+            if(state[(i-1)*size + j - 1] = 1){
+              let state[i*size + j] = 0;
+              let state[(i-1)*size + j - 1] = 2;
+              let score = maxi();
+              let state[i*size + j] = 2;
+              let state[(i-1)*size + j - 1] = 1;
+              if(score = -1){
+                return -1;
+              } else {
+                let moveHappened = true;
+              }
+            }
+          }
+          if((j+1) < size){
+            if(state[(i-1)*size + j + 1] = 1){
+              let state[i*size + j] = 0;
+              let state[(i-1)*size + j + 1] = 2;
+              let score = maxi();
+              let state[i*size + j] = 2;
+              let state[(i-1)*size + j + 1] = 1;
+              if(score = -1){
+                return -1;
+              } else {
+                let moveHappened = true;
+              }
+            }
+          }
+        }
+        let j = j + 1;
+      }
+      let i = i + 1;
+    }
+    if(moveHappened = true){
+      return 1;
+    }
+    return -1;
+  }
+}
