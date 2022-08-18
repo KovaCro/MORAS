@@ -1607,11 +1607,9 @@ call Board.blackGreedy 1
 pop local 2
 push local 2
 return
-function Board.maxi 4
+function Board.maxi 3
 push argument 0
 pop pointer 0
-push constant 0
-pop local 3
 push constant 0
 pop local 0
 label WHILE_EXP0
@@ -1756,12 +1754,7 @@ goto IF_FALSE3
 label IF_TRUE3
 push constant 1
 return
-goto IF_END3
 label IF_FALSE3
-push constant 0
-not
-pop local 3
-label IF_END3
 label IF_FALSE2
 push local 1
 push constant 0
@@ -1854,12 +1847,7 @@ goto IF_FALSE6
 label IF_TRUE6
 push constant 1
 return
-goto IF_END6
 label IF_FALSE6
-push constant 0
-not
-pop local 3
-label IF_END6
 label IF_FALSE5
 label IF_FALSE4
 push local 1
@@ -1955,12 +1943,7 @@ goto IF_FALSE9
 label IF_TRUE9
 push constant 1
 return
-goto IF_END9
 label IF_FALSE9
-push constant 0
-not
-pop local 3
-label IF_END9
 label IF_FALSE8
 label IF_FALSE7
 label IF_FALSE1
@@ -1976,24 +1959,12 @@ add
 pop local 0
 goto WHILE_EXP1
 label WHILE_END1
-push local 3
-push constant 0
-not
-eq
-if-goto IF_TRUE10
-goto IF_FALSE10
-label IF_TRUE10
 push constant 1
 neg
 return
-label IF_FALSE10
-push constant 1
-return
-function Board.mini 4
+function Board.mini 3
 push argument 0
 pop pointer 0
-push constant 0
-pop local 3
 push constant 0
 pop local 0
 label WHILE_EXP0
@@ -2133,12 +2104,7 @@ label IF_TRUE3
 push constant 1
 neg
 return
-goto IF_END3
 label IF_FALSE3
-push constant 0
-not
-pop local 3
-label IF_END3
 label IF_FALSE2
 push local 1
 push constant 0
@@ -2233,12 +2199,7 @@ label IF_TRUE6
 push constant 1
 neg
 return
-goto IF_END6
 label IF_FALSE6
-push constant 0
-not
-pop local 3
-label IF_END6
 label IF_FALSE5
 label IF_FALSE4
 push local 1
@@ -2336,12 +2297,7 @@ label IF_TRUE9
 push constant 1
 neg
 return
-goto IF_END9
 label IF_FALSE9
-push constant 0
-not
-pop local 3
-label IF_END9
 label IF_FALSE8
 label IF_FALSE7
 label IF_FALSE1
@@ -2357,16 +2313,5 @@ add
 pop local 0
 goto WHILE_EXP1
 label WHILE_END1
-push local 3
-push constant 0
-not
-eq
-if-goto IF_TRUE10
-goto IF_FALSE10
-label IF_TRUE10
 push constant 1
-return
-label IF_FALSE10
-push constant 1
-neg
 return

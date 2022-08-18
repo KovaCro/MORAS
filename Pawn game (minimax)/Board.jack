@@ -287,8 +287,6 @@ class Board {
   }
   method int maxi(){
     var int i, j, score;
-    var bool moveHappened;
-    let moveHappened = false;
     let i = 0;
     while(i < size){
       if(state[size*(size-1) + i] = 1){
@@ -309,8 +307,6 @@ class Board {
             let state[(i+1)*size + j] = 0;
             if(score = 1){
               return 1;
-            } else {
-              let moveHappened = true;
             }
           }
           if(j > 0){
@@ -322,8 +318,6 @@ class Board {
               let state[(i+1)*size + j - 1] = 2;
               if(score = 1){
                 return 1;
-              } else {
-                let moveHappened = true;
               }
             }
           }
@@ -336,8 +330,6 @@ class Board {
               let state[(i+1)*size + j + 1] = 2;
               if(score = 1){
                 return 1;
-              } else {
-                let moveHappened = true;
               }
             }
           }
@@ -346,15 +338,10 @@ class Board {
       }
       let i = i + 1;
     }
-    if(moveHappened = true){
-      return -1;
-    }
-    return 1;
+    return -1;
   }
   method int mini(){
     var int i, j, score;
-    var bool moveHappened;
-    let moveHappened = false;
     let i = 0;
     while(i < size){
       if(state[i] = 2){
@@ -375,8 +362,6 @@ class Board {
             let state[(i-1)*size + j] = 0;
             if(score = -1){
               return -1;
-            } else {
-              let moveHappened = true;
             }
           }
           if(j > 0){
@@ -388,8 +373,6 @@ class Board {
               let state[(i-1)*size + j - 1] = 1;
               if(score = -1){
                 return -1;
-              } else {
-                let moveHappened = true;
               }
             }
           }
@@ -402,8 +385,6 @@ class Board {
               let state[(i-1)*size + j + 1] = 1;
               if(score = -1){
                 return -1;
-              } else {
-                let moveHappened = true;
               }
             }
           }
@@ -412,9 +393,6 @@ class Board {
       }
       let i = i + 1;
     }
-    if(moveHappened = true){
-      return 1;
-    }
-    return -1;
+    return 1;
   }
 }
